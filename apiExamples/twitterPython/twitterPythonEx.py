@@ -1,15 +1,21 @@
-#!/usr/bin/env python3
-# implements the twitter API provided by github/bear/python-twitter
-#
-import twitter
-import oauth2
+import tweepy
 
-conkey='mS0qkCbDpX86zpPQxMp8VOce0'
-consec='ptBPkXmivFtSX59UEr631Z0mm5RvgrfVzjhZgSHJFuZMQGsqaL'
-acckey='508049505-xY4lxzLzAzNirPhB0s0OW3m5wkmpM7kJtESb4koR'
-toksec='t6l3eVDyBkfiPCJaIzZmrNQU1WS5Y7L6Mla7tiuZH4N9E'
+def get_api(cfg):
+  auth = tweepy.OAuthHandler(cfg['consumer_key'], cfg['consumer_secret'])
+  auth.set_access_token(cfg['access_token'], cfg['access_token_secret'])
+  return tweepy.API(auth)
 
-# show that credentials work
-print(api.VerifyCredentials())
+cfg = {"consumer_key"        : "",
+       "consumer_secret"     : "",
+       "access_token"        : "",
+       "access_token_secret" : ""}
 
-# api.PostUpdate(aTweet)
+api = get_api(cfg)
+tweet = "Testing Testing Testing"
+status = api.update_with_media('NASA_logo.png',tweet)
+
+test = api.home_timeline()
+print('IDs are:')
+idList = [skytweet.text for skytweet in test]
+print(test)
+print(idList[0])
